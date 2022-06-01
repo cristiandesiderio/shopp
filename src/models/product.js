@@ -1,3 +1,4 @@
+const { json } = require('body-parser');
 const Sequelize = require('sequelize');
 
 const db = require('../db.js');
@@ -69,11 +70,40 @@ const getDiscountProducts = () => {
         },
         where: {
             discount: {
-                [Sequelize.Op.gt]: 0,
+                [Sequelize.Op.eq]: 0,
             },
         },
     });
 };
+
+/**
+ * Obtener todos los productos de una categoria para un resultado mas granular
+ *  
+ */
+const filterByCategory = (categoria) => {
+
+    if (typeof categoria !== 'string'){
+        return JSON.stringify({
+            name: 'Error - Invalid Category Format',
+            price: 0.0,
+            type: ProductType.HOME,
+            discount: 0.0,
+        });
+    }
+    
+    categoria = String.prototype.toLowerCase(categoria);
+
+    return Product.findAll({
+        attributes: {
+            exclude: ['createdAt', 'updatedAt'],
+        },
+        where: {
+            discount: {
+                [Sequelize.Op.eq]: categoria,
+            },
+        },
+    });
+}
 
 /**
  * Crear un producto nuevo.
@@ -136,6 +166,7 @@ const ProductModel = {
     findById: findById,
     getAll: getAllProducts,
     getAllDiscount: getDiscountProducts,
+    filterByCategory: filterByCategory,
     create: createProduct,
     update: updateProduct,
     delete: deleteProduct,

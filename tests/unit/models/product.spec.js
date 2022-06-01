@@ -122,8 +122,8 @@ test('Filtrar productos por tipo home', async () => {
     const product = await ProductModel.create(firstProductData);
     await ProductModel.create(secondProductData);
 
-    let products = await ProductModel.getAll(null, null, ProductType.HOME);
-
+    let products = await ProductModel.filterByCategory(ProductType.HOME);
+console.log(products)
     // La lista de productos debería contener solo el primero
     expect(products.rows.length).toBe(1);
     expect(products.rows[0].id).toBe(product.id);
@@ -146,11 +146,7 @@ test('Filtrar productos por tipo electronics', async () => {
     await ProductModel.create(firstProductData);
     const product = await ProductModel.create(secondProductData);
 
-    let products = await ProductModel.getAll(
-        null,
-        null,
-        ProductType.ELECTRONICS
-    );
+    let products = await ProductModel.filterByCategory(ProductType.ELECTRONICS);
 
     // La lista de productos debería contener solo el segundo
     expect(products.rows.length).toBe(1);
