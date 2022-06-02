@@ -1,5 +1,6 @@
 const { CartModel, ProductModel } = require('./models/index.js');
 const express = require('express');
+const { dump } = require('nunjucks/src/filters');
 
 const router = express.Router();
 
@@ -28,6 +29,15 @@ router.post('/cart', async function (req, res) {
     }
 
     res.redirect('/cart');
+});
+
+router.post('/discart', async function (req, res) {
+    
+    const productID = +req.body.productid;          
+    await CartModel.removeProductFromCart(1, productID);
+    res.redirect('/cart');
+
+    
 });
 
 router.get('/cart', async function (req, res) {
