@@ -17,7 +17,9 @@
             <p class="fs-3">$ {{ product.price }}</p>
 
             <p class="card-text">
-                <small class="text">{{ product.description }}</small>
+                {% if product.description != null  %}
+                <small class="text" data-testid="description">{{ product.description }}</small>
+                {% endif %}
             </p>
 
             {% if (product.discount > 0) %}
