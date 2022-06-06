@@ -44,4 +44,14 @@ describe('Home Test', () => {
             .should('contain.text', '5 %');
     });
 
+    it('Deberia no mostrar el boton next en la ultima pagina ', () => {
+        cy.visit('/');
+        cy.get('.pagination__next > a').click();
+        cy.url().should('include', 'page=2');
+        cy.get('.pagination__next > a').should('not.exist');
+
+
+
+    });
+
 });
