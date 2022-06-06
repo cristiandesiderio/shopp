@@ -85,16 +85,20 @@ const filterByCategory = (categoria) => {
     
     //Validacion y sanitizacion del parametro
     if (typeof categoria !== 'string'){
-        return JSON.parse('[{"name": "Error","price": 0.0,"type": "error","discount": 0.0,"description": "Invalid Category Format"}]');
+        return JSON.parse('{"rows":[{"name": "Error","price": 0.0,"type": "error","discount": 0.0,"description": "Invalid Category Format"}],"count":1}');
+    }
+
+    if(categoria === 'all'){
+        return getAllProducts();
     }
 
     if(! productType.types.includes(categoria)){
-        return JSON.parse('[]');
+        return JSON.parse('{"rows":[],"count":0}');
     }
     
     categoria = categoria.toLowerCase();
 
-    return Product.findAll({
+    return Product.findAndCountAll({
         attributes: {
             exclude: ['createdAt', 'updatedAt'],
         },

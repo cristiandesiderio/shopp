@@ -123,10 +123,10 @@ test('Filtrar productos por tipo home', async () => {
     const product = await ProductModel.create(firstProductData);
     await ProductModel.create(secondProductData);
 
-    let products = await ProductModel.filterByCategory(ProductType.HOME);
+   let {rows, count} = await ProductModel.filterByCategory(ProductType.HOME);
     // La lista de productos debería contener solo el primero
-    expect(products.length).toBe(1);
-    expect(products[0].id).toBe(product.id);
+    expect(count).toBe(1);
+    expect(rows[0].id).toBe(product.id);
 });
 
 test('Filtrar productos por tipo electronics', async () => {
@@ -146,19 +146,19 @@ test('Filtrar productos por tipo electronics', async () => {
     await ProductModel.create(firstProductData);
     const product = await ProductModel.create(secondProductData);
    expect(ProductType.types.includes('electronics')).toBe(true);
-    let products = await ProductModel.filterByCategory(ProductType.ELECTRONICS);
+   let {rows, count} = await ProductModel.filterByCategory(ProductType.ELECTRONICS);
 
     // La lista de productos debería contener solo el segundo
-    expect(products.length).toBe(1);
-    expect(products[0].id).toBe(product.id);
+    expect(count).toBe(1);
+    expect(rows[0].id).toBe(product.id);
 });
 
 test('Filtrar productos usando parametro de tipo incorrecto', async () => {
 
     let products = await ProductModel.filterByCategory(0);
 
-    expect(products.length).toBe(1);
-    expect(products[0].type).toBe('error')
+    expect(products.count).toBe(1);
+    expect(products.rows[0].type).toBe('error')
 });
 
 
@@ -181,7 +181,7 @@ test('Filtrar productos por tipo inexistente', async () => {
 
     let products = await ProductModel.filterByCategory('fake');
 
-    expect(products.length).toBe(0);
+    expect(products.count).toBe(0);
 });
 
 test('Editar producto', async () => {

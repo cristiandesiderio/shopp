@@ -1,5 +1,6 @@
 const { CartModel, ProductModel } = require('./models/index.js');
 const express = require('express');
+const productType = require('./models/productType.js');
 
 const router = express.Router();
 
@@ -9,9 +10,10 @@ router.get('/', async function (req, res) {
     const skip = pageSize * (currentPage - 1);
 
     const { rows, count } = await ProductModel.getAll(pageSize, skip);
-
+    
     res.render('home.html', {
         products: rows,
+        categories: productType.types,
         pagination: {
             totalPages: Math.ceil(count / pageSize),
             currentPage: currentPage,
@@ -29,6 +31,27 @@ router.post('/cart', async function (req, res) {
 
     res.redirect('/cart');
 });
+
+router.post('/ftrtype', async function (req, res) {
+    
+    if(typeof req.body.category === 'undefined') { res.redirect('/'); }
+
+    const pageSize = 10;
+    const category = req.body.category;
+    const currentPage = +req.query.page || 1;
+    //
+    const { rows, count }  = await ProductModel.filterByCategory(category);
+    
+    res.render('home.html', { 
+        products: rows,
+        categories: productType.types,
+        pagination: {
+            totalPages: Math.ceil(count / pageSize),
+            currentPage: currentPage,
+        },
+    });
+});
+
 
 router.get('/cart', async function (req, res) {
     const cart = await CartModel.findById(1);
