@@ -55,6 +55,11 @@ const getAllProducts = (limit, skip, type) => {
             exclude: ['createdAt', 'updatedAt'],
         },
         where: where,
+        // Agregamos la instrucción para que la lista venga ordenada directamente para toda la app
+        order: [
+            ['name', 'ASC'],
+            ['price', 'ASC'],
+        ],
     });
 };
 
