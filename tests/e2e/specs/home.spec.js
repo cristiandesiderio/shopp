@@ -44,4 +44,14 @@ describe('Home Test', () => {
             .should('contain.text', '5 %');
     });
 
+    it('Deberia no mostrar el boton previous en la primer pagina ', () => {
+        cy.visit('/');
+        cy.get('.pagination__next > a').click();
+        cy.get('.pagination__prev > a').click();
+        cy.get('.pagination__prev > a').should('not.exist');
+
+    });
+
+    
+
 });
