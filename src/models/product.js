@@ -1,7 +1,8 @@
-const { json } = require('body-parser');
+
 const Sequelize = require('sequelize');
 
 const db = require('../db.js');
+const productType = require('./productType.js');
 
 const ProductType = require('./productType.js');
 
@@ -80,25 +81,25 @@ const getDiscountProducts = () => {
  * Obtener todos los productos de una categoria para un resultado mas granular
  *  
  */
-const filterByCategory = (categoria) => {
-
+const filterByCategory = (categoria) => {  
+    
+    //Validacion y sanitizacion del parametro
     if (typeof categoria !== 'string'){
-        return JSON.stringify({
-            name: 'Error - Invalid Category Format',
-            price: 0.0,
-            type: ProductType.HOME,
-            discount: 0.0,
-        });
+        return JSON.parse('[{"name": "Error","price": 0.0,"type": "error","discount": 0.0,"description": "Invalid Category Format"}]');
+    }
+
+    if(! productType.types.includes(categoria)){
+        return JSON.parse('[]');
     }
     
-    categoria = String.prototype.toLowerCase(categoria);
+    categoria = categoria.toLowerCase();
 
     return Product.findAll({
         attributes: {
             exclude: ['createdAt', 'updatedAt'],
         },
         where: {
-            discount: {
+            type: {
                 [Sequelize.Op.eq]: categoria,
             },
         },
