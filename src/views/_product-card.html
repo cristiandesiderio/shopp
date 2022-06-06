@@ -28,7 +28,7 @@
                 {{ product.CartProduct.quantity }} en carrito
             </div>
             <div class="mt-auto">
-                <form action="/discart" method="POST">
+                <form action="/discard" method="POST">
                     <input type="text" class="d-none" name="productid" value="{{ product.id }}">
                     <button type="submit" class="btn btn-dark"><i class="fa fa-trash "></i></button>
                 </form>
