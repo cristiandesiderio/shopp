@@ -1,17 +1,20 @@
 const { CartModel, ProductModel } = require('./models/index.js');
 const express = require('express');
+const productType = require('./models/productType.js');
 
 const router = express.Router();
 
 router.get('/', async function (req, res) {
     const pageSize = 10;
     const currentPage = +req.query.page || 1;
+    const category = req.query.type || undefined;
     const skip = pageSize * (currentPage - 1);
 
-    const { rows, count } = await ProductModel.getAll(pageSize, skip);
-
+    const { rows, count } = await ProductModel.getAll(pageSize, skip,category);
+    
     res.render('home.html', {
         products: rows,
+        categories: productType.types,
         pagination: {
             totalPages: Math.ceil(count / pageSize),
             currentPage: currentPage,
