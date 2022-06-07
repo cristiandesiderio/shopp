@@ -123,6 +123,32 @@ test('Listar productos con limite y offset', async () => {
     expect(products.rows[0].id).toBe(product.id);
 });
 
+test('Listar productos en orden', async () => {
+
+    const nombreSegundoProducto = 'Lustradora';
+
+    const firstProductData = {
+        price: 25000.0,
+        type: ProductType.HOME,
+        name: 'Tetera',
+    };
+
+    const secondProductData = {
+        price: 4000.0,
+        name: nombreSegundoProducto,
+        type: ProductType.ELECTRONICS,
+    };
+
+    // Creamos ambos productos
+    const product = await ProductModel.create(firstProductData);
+    await ProductModel.create(secondProductData);
+
+    let products = await ProductModel.getAll();
+
+    // La lista de productos debería tener en primer lugar el segundo producto agregado
+    expect(products.rows[0].name).toBe(nombreSegundoProducto);
+});
+
 test('Filtrar productos por tipo home', async () => {
     const firstProductData = {
         price: 50000.0,
