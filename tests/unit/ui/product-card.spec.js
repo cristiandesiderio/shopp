@@ -128,4 +128,34 @@ describe('Tarjeta de producto', () => {
             getByTestId(document.body, 'discount');
         }).toThrowError(TestingLibraryElementError)
     });
+
+    test('Deberia mostrar la descripción si el producto tiene una ', async () => {
+        const product = {
+            name: 'Placard',
+            type: 'home',
+            price: 100,
+            description: 'Sirve para guardar cosas',
+        };
+
+        const html = renderProduct(product);
+        document.body.innerHTML = html;
+
+        const descripcion = getByTestId(document.body, 'description');
+        expect(descripcion.innerHTML).toBe('Sirve para guardar cosas');
+    });
+
+    test('Deberia no mostrar la descripcion si el producto no la tiene', async () => {
+        const product = {
+            name: 'Placard',
+            type: 'home',
+            price: 100
+        };
+
+        const html = renderProduct(product);
+        document.body.innerHTML = html;
+
+        expect(() => {
+            getByTestId(document.body, 'description');
+        }).toThrowError(TestingLibraryElementError)
+    });
 });

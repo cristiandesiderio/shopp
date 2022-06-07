@@ -25,3 +25,11 @@ body {
     list-style: none;
     display: flex;
 }
+
+.filter{
+    background: rgba(142, 186, 236, 0.75);
+}
+
+.filter select{
+    width: 15rem ;
+}
