@@ -1,6 +1,8 @@
+
 const Sequelize = require('sequelize');
 
 const db = require('../db.js');
+const productType = require('./productType.js');
 
 const ProductType = require('./productType.js');
 
@@ -30,6 +32,10 @@ const Product = db.define(
             type: Sequelize.NUMBER,
             allowNull: false,
         },
+        description: {
+            type: Sequelize.STRING,
+            allowNull: true,
+        },
     },
     { tableName: 'Product' }
 );
@@ -55,6 +61,11 @@ const getAllProducts = (limit, skip, type) => {
             exclude: ['createdAt', 'updatedAt'],
         },
         where: where,
+        // Agregamos la instrucción para que la lista venga ordenada directamente para toda la app
+        order: [
+            ['name', 'ASC'],
+            ['price', 'ASC'],
+        ],
     });
 };
 
@@ -85,8 +96,9 @@ const createProduct = ({
     price = 0.0,
     type = ProductType.HOME,
     discount = 0.0,
+    description = '',
 } = {}) => {
-    return Product.create({ name, price, type, discount });
+    return Product.create({ name, price, type, discount, description });
 };
 
 /**
@@ -97,12 +109,12 @@ const createProduct = ({
  */
 const updateProduct = async (
     id,
-    { name = '', price = 0.0, type = ProductType.HOME, discount = 0.0 } = {}
+    { name = '', price = 0.0, type = ProductType.HOME, discount = 0.0, description = '' } = {}
 ) => {
     const product = await findById(id);
 
     if (product != null) {
-        return product.update({ name, price, type, discount });
+        return product.update({ name, price, type, discount, description });
     }
     return null;
 };
