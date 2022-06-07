@@ -10,6 +10,7 @@ test('Crear producto', async () => {
         price: 50000.0,
         type: ProductType.HOME,
         name: 'Placard',
+        description :'Para guardar objetos',
     };
 
     // Creamos el producto
@@ -18,6 +19,23 @@ test('Crear producto', async () => {
     expect(product.price).toBe(productData.price);
     expect(product.type).toBe(productData.type);
     expect(product.name).toBe(productData.name);
+    expect(product.description).toBe(productData.description);
+});
+
+test('Crear producto sin descripcion', async () => {
+    const productData = {
+        price: 1000.0,
+        name: 'Tostadora',
+        type: ProductType.HOME,
+    };
+
+    // Creamos el producto
+    const product = await ProductModel.create(productData);
+
+    expect(product.price).toBe(productData.price);
+    expect(product.type).toBe(ProductType.HOME);
+    expect(product.name).toBe(productData.name);
+    expect(product.description).toBe('');
 });
 
 test('Crear producto sin tipo', async () => {
@@ -103,6 +121,32 @@ test('Listar productos con limite y offset', async () => {
     // La lista de productos debería contener solo el segundo
     expect(products.rows.length).toBe(1);
     expect(products.rows[0].id).toBe(product.id);
+});
+
+test('Listar productos en orden', async () => {
+
+    const nombreSegundoProducto = 'Lustradora';
+
+    const firstProductData = {
+        price: 25000.0,
+        type: ProductType.HOME,
+        name: 'Tetera',
+    };
+
+    const secondProductData = {
+        price: 4000.0,
+        name: nombreSegundoProducto,
+        type: ProductType.ELECTRONICS,
+    };
+
+    // Creamos ambos productos
+    const product = await ProductModel.create(firstProductData);
+    await ProductModel.create(secondProductData);
+
+    let products = await ProductModel.getAll();
+
+    // La lista de productos debería tener en primer lugar el segundo producto agregado
+    expect(products.rows[0].name).toBe(nombreSegundoProducto);
 });
 
 test('Filtrar productos por tipo home', async () => {

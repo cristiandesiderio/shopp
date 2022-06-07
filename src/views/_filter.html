@@ -1,0 +1,18 @@
+{% macro filter(categories) %}
+<div class="card filter">
+    <div class="card-body d-flex flex-row">
+        <div class="ms-3">
+            <form action="/" method="GET">
+                <label for="type">Categoria:</label>
+                <select name="type" id="type" >
+                    <option value="all">Todas las categorias</option>
+                    {% for category in categories %}
+                        <option value="{{category}}">{{category}}</option>
+                    {% endfor %}
+                </select>
+                <button id="btn-filter" type="submit" class="btn btn-outline-primary">Aplicar filtros</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endmacro %}
