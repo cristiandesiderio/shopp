@@ -45,6 +45,16 @@ describe('Home Test', () => {
     });
 
 
+    it('Deberia no mostrar el boton previous en la primer pagina ', () => {
+        cy.visit('/');
+        cy.get('.pagination__next > a').click();
+        cy.get('.pagination__prev > a').click();
+        cy.get('.pagination__prev > a').should('not.exist');
+
+    });   
+
+
+
     it('Deberia no mostrar el boton next en la ultima pagina ', () => {
         cy.visit('/');
         cy.get('.pagination__next > a').click();
@@ -72,4 +82,4 @@ describe('Home Test', () => {
   });
   
   
-  
+ 
