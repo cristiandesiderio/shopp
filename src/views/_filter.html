@@ -2,9 +2,9 @@
 <div class="card filter">
     <div class="card-body d-flex flex-row">
         <div class="ms-3">
-            <form action="/ftrtype" method="POST">
-                <label for="category">Categoria:</label>
-                <select name="category" id="category" >
+            <form action="/" method="GET">
+                <label for="type">Categoria:</label>
+                <select name="type" id="type" >
                     <option value="all">Todas las categorias</option>
                     {% for category in categories %}
                         <option value="{{category}}">{{category}}</option>

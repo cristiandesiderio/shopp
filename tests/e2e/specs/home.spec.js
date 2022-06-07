@@ -47,15 +47,15 @@ describe('Home Test', () => {
     it('Deberia mostrar todos los filtros de categoria', () => {
         cy.visit('/');
 
-        cy.get('#category option').should('have.length.gt', 1)
+        cy.get('#type option').should('have.length.gt', 1)
     });
 
     it('Deberia poder filtrar por una categoria determinada', () => {
         cy.visit('/');
 
-        cy.get('#category option:nth-child(2)').should('have.text', 'electronics');
+        cy.get('#type option:nth-child(2)').should('have.text', 'electronics');
         
-        cy.get('#category').select(1);
+        cy.get('#type').select(1);
         cy.get('#btn-filter').click();
 
         cy.get('.product').should('have.length', 5);
