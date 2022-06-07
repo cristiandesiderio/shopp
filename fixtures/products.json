@@ -3,13 +3,15 @@
         "discount": 5,
         "name": "Placard",
         "price": 50000,
-        "type": "home"
+        "type": "home",
+        "description": "Sirve para guardar ropa"
     },
     {
         "discount": 10,
         "name": "Mesa",
         "price": 25000,
-        "type": "home"
+        "type": "home",
+        "description": "Sirve para comer"
     },
     {
         "discount": 0,
@@ -45,7 +47,8 @@
         "discount": 0,
         "name": "TV",
         "price": 55000,
-        "type": "electronics"
+        "type": "electronics",
+        "description": "Sirve para reproducir contenido"
     },
     {
         "discount": 0,
