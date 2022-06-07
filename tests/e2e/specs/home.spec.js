@@ -18,7 +18,7 @@ describe('Home Test', () => {
     it('El primer producto deberia ser "Placard"', () => {
         cy.visit('/');
 
-        cy.get('.product:first-child .card-title').should(
+        cy.get('.product .card-title').first().should(
             'have.text',
             'Placard'
         );
@@ -40,9 +40,10 @@ describe('Home Test', () => {
     it('Deberia mostrar el primer producto con descuento', () => {
         cy.visit('/');
 
-        cy.get(':nth-child(1) > .card-body > .ms-3 > [data-testid="discount"]')
+        cy.get(':nth-child(1) > .product >.card-body > .ms-3 > [data-testid="discount"]')
             .should('contain.text', '5 %');
     });
+
 
     it('Deberia no mostrar el boton previous en la primer pagina ', () => {
         cy.visit('/');
@@ -50,8 +51,35 @@ describe('Home Test', () => {
         cy.get('.pagination__prev > a').click();
         cy.get('.pagination__prev > a').should('not.exist');
 
+    });   
+
+
+
+    it('Deberia no mostrar el boton next en la ultima pagina ', () => {
+        cy.visit('/');
+        cy.get('.pagination__next > a').click();
+        cy.url().should('include', 'page=2');
+        cy.get('.pagination__next > a').should('not.exist');
+
+    });  
+  
+    it('Deberia mostrar todos los filtros de categoria', () => {
+        cy.visit('/');
+
+        cy.get('#type option').should('have.length.gt', 1)
     });
 
-    
+    it('Deberia poder filtrar por una categoria determinada', () => {
+        cy.visit('/');
 
-});
+        cy.get('#type option:nth-child(2)').should('have.text', 'electronics');
+        
+        cy.get('#type').select(1);
+        cy.get('#btn-filter').click();
+      
+        cy.get('.product').should('have.length', 5);
+    });
+  });
+  
+  
+ 
