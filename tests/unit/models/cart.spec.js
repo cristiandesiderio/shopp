@@ -291,25 +291,18 @@ test('Quitar producto de un carrito inexistente', async () => {
         type: ProductType.HOME,
         name: 'Placard',
     };
-
-    const productDataSecond = {
-        price: 5000.0,
-        type: ProductType.ELECTRONICS,
-        name: 'Tostadora',
-    };
-
-    // Creamos los productos
+   
+    // Creamos el producto
     const productFirst = await ProductModel.create(productDataFirst);
-    const productSecond = await ProductModel.create(productDataSecond);
 
-    // Creamos el carrito con el primer producto
+    // Creamos el carrito con el producto
     const cart = await CartModel.create(productFirst);
 
     //Borramos el carrito 
     cart.destroy();
     
 
-    // Borramos el primer producto del carrito
+    // Borramos el producto del carrito
     const removed = await CartModel.removeProductFromCart(
         cart.id,
         productFirst.id

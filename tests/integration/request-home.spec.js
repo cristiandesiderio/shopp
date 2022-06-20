@@ -2,8 +2,7 @@ const fetch = require('node-fetch');
 
 const server = require('../../src/index.js');
 const fixture = require('../../fixtures/index.js');
-const { request } = require('express');
-const { param } = require('../../src/router.js');
+
 
 let instance;
 
