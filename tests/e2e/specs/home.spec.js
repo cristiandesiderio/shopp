@@ -15,12 +15,12 @@ describe('Home Test', () => {
         cy.get('.product').should('have.length', 10);
     });
 
-    it('El primer producto deberia ser "Placard"', () => {
+    it('El primer producto deberia ser "Barra de sonido"', () => {
         cy.visit('/');
 
         cy.get('.product .card-title').first().should(
             'have.text',
-            'Placard'
+            'Barra de sonido'
         );
     });
 
@@ -56,7 +56,7 @@ describe('Home Test', () => {
         cy.get('.pagination__prev > a').click();
         cy.get('.pagination__prev > a').should('not.exist');
 
-    });   
+    });
 
 
 
@@ -66,8 +66,8 @@ describe('Home Test', () => {
         cy.url().should('include', 'page=2');
         cy.get('.pagination__next > a').should('not.exist');
 
-    });  
-  
+    });
+
     it('Deberia mostrar todos los filtros de categoria', () => {
         cy.visit('/');
 
@@ -78,13 +78,13 @@ describe('Home Test', () => {
         cy.visit('/');
 
         cy.get('#type option:nth-child(2)').should('have.text', 'electronics');
-        
+
         cy.get('#type').select(1);
         cy.get('#btn-filter').click();
-      
+
         cy.get('.product').should('have.length', 5);
     });
-  });
-  
-  
- 
+});
+
+
+

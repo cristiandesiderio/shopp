@@ -2,7 +2,6 @@
 const Sequelize = require('sequelize');
 
 const db = require('../db.js');
-const productType = require('./productType.js');
 
 const ProductType = require('./productType.js');
 

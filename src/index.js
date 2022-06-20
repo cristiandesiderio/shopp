@@ -34,6 +34,7 @@ async function startServer(port = process.env.PORT) {
     app.use(bodyParser.json());
 
     app.use('/static', express.static(publicPath));
+    app.use(express.static(path.join(__dirname, 'images')));
 
     nunjucks.init({
         express: app,
