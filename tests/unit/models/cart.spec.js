@@ -80,6 +80,43 @@ test('Agregar producto nuevo al carrito', async () => {
     );
 });
 
+test('Agregar producto a un carrito inexistente', async () => {
+    const productDataFirst = {
+        price: 50000.0,
+        type: ProductType.HOME,
+        name: 'Placard',
+    };
+
+    const productDataSecond = {
+        price: 5000.0,
+        type: ProductType.ELECTRONICS,
+        name: 'Tostadora',
+    };
+
+    // Creamos los productos
+    const productFirst = await ProductModel.create(productDataFirst);
+    const productSecond = await ProductModel.create(productDataSecond);
+
+    // Creamos el carrito con el primer producto
+    const cart = await CartModel.create(productFirst);
+
+    // Obtenemos los productos de ese carrito
+    const products = await cart.getProducts();
+
+    expect(products.length).toBe(1);
+    expect(cart.total).toBe(productDataFirst.price);
+
+    cart.destroy();
+    // Agregamos el segundo producto en el carro que ya no existe
+    const cartUpdated = await CartModel.addProductToCart(
+        cart.id,
+        productSecond
+    );
+
+    expect(cartUpdated).toBe(null)
+});
+
+
 test('Sumar item a producto del carrito', async () => {
     const productDataFirst = {
         price: 50000.0,
@@ -213,6 +250,77 @@ test('Quitar producto de un carrito', async () => {
     expect(searchProductFirst).toBeUndefined();
     expect(searchProductSecond.id).toBe(productSecond.id);
 });
+
+
+test('Quitar producto que no existe del carrito', async () => {
+    const productDataFirst = {
+        price: 50000.0,
+        type: ProductType.HOME,
+        name: 'Placard',
+    };
+
+    const productDataSecond = {
+        price: 5000.0,
+        type: ProductType.ELECTRONICS,
+        name: 'Tostadora',
+    };
+
+    // Creamos los productos
+    const productFirst = await ProductModel.create(productDataFirst);
+    const productSecond = await ProductModel.create(productDataSecond);
+
+    // Creamos el carrito con el primer producto
+    const cart = await CartModel.create(productFirst);
+
+
+    // Borramos el segundo producto del carrito que no fue agregado
+    const removed = await CartModel.removeProductFromCart(
+        cart.id,
+        productSecond.id
+    );
+
+
+    expect(removed).toBe(false);
+    
+});
+
+
+test('Quitar producto de un carrito inexistente', async () => {
+    const productDataFirst = {
+        price: 50000.0,
+        type: ProductType.HOME,
+        name: 'Placard',
+    };
+
+    const productDataSecond = {
+        price: 5000.0,
+        type: ProductType.ELECTRONICS,
+        name: 'Tostadora',
+    };
+
+    // Creamos los productos
+    const productFirst = await ProductModel.create(productDataFirst);
+    const productSecond = await ProductModel.create(productDataSecond);
+
+    // Creamos el carrito con el primer producto
+    const cart = await CartModel.create(productFirst);
+
+    //Borramos el carrito 
+    cart.destroy();
+    
+
+    // Borramos el primer producto del carrito
+    const removed = await CartModel.removeProductFromCart(
+        cart.id,
+        productFirst.id
+    );
+
+    
+
+    expect(removed).toBe(null);
+    
+});
+
 
 test('Quitar producto de un carrito cuando el producto tenia mas de un item', async () => {
     const productData = {
