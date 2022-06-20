@@ -19,7 +19,7 @@ const compression = require('compression');
 
 const inTest = env.test;
 const viewsPath = path.resolve(__dirname, '.', 'views');
-const publicPath = path.resolve(__dirname, '.', 'public');
+const publicPath = path.resolve(__dirname, '.', 'static');
 
 async function startServer(port = process.env.PORT) {
     port = port || (await detectPort(3000));
