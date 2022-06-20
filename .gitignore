@@ -111,3 +111,6 @@ database.sqlite
 
 # Visual Studio
 .vs/
+
+main.css
+main.min.css
