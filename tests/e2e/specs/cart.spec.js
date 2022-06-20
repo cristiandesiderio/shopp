@@ -12,7 +12,7 @@ describe('Cart', () => {
     it('Deberia poder agregar un item al carrito', () => {
         cy.visit('/');
 
-        cy.get('.product:first-child [type=submit]').click();
+        cy.get(':nth-child(2) > .card-body > .flex-grow-1 > form > .btn').click();
         cy.get('.product').should('have.length', 1);
         cy.get('.product .product__quantity').should(
             'contain.text',
@@ -21,7 +21,7 @@ describe('Cart', () => {
 
         cy.get('.navbar-brand').click();
 
-        cy.get('.product:first-child [type=submit]').click();
+        cy.get(':nth-child(2) > .card-body > .flex-grow-1 > form > .btn').click();
         cy.get('.product').should('have.length', 1);
         cy.get('.product .product__quantity').should(
             'contain.text',
@@ -30,15 +30,15 @@ describe('Cart', () => {
 
         cy.get('.navbar-brand').click();
 
-        cy.get('.product:nth-child(2) [type=submit]').click();
+        cy.get(':nth-child(3) > .card-body > .flex-grow-1 > form > .btn').click();
         cy.get('.product').should('have.length', 2);
 
-        cy.get('.product:first-child .product__quantity').should(
+        cy.get(':nth-child(3) .product__quantity').should(
             'contain.text',
             '2 en carrito'
         );
 
-        cy.get('.product:nth-child(2) .product__quantity').should(
+        cy.get(':nth-child(2) .product__quantity').should(
             'contain.text',
             '1 en carrito'
         );
@@ -56,43 +56,43 @@ describe('Cart', () => {
 
     it('Deberia poder agregar y borrar items de un carrito', () => {
         cy.visit('/');
-            //Agrega al carrito el primer item del home
-        cy.get('.product:first-child [type=submit]').click();       
-            //Vuelve al home
+        //Agrega al carrito el primer item del home
+        cy.get(':nth-child(2) > .card-body > .flex-grow-1 > form > .btn').click();
+        //Vuelve al home
         cy.get('.navbar-brand').click();
-            //Agrega el mismo producto
-        cy.get('.product:first-child [type=submit]').click();        
+        //Agrega el mismo producto
+        cy.get(':nth-child(2) > .card-body > .flex-grow-1 > form > .btn').click();
 
-            //Vuelve al home 
+        //Vuelve al home 
         cy.get('.navbar-brand').click();
-            //Agrega al segundo producto
-        cy.get('.product:nth-child(2) [type=submit]').click();
-            //Verifica el tamaño de la coleccion 
+        //Agrega al segundo producto
+        cy.get(':nth-child(3) > .card-body > .flex-grow-1 > form > .btn').click();
+        //Verifica el tamaño de la coleccion 
         cy.get('.product').should('have.length', 2);
-            //Verifica que del primer producto haya 2 
-        cy.get('.product:first-child .product__quantity').should(
+        //Verifica que del primer producto haya 2 
+        cy.get(':nth-child(3) .product__quantity').should(
             'contain.text',
             '2 en carrito'
         );
-            //Verifica que del segundo producto haya 1
-        cy.get('.product:nth-child(2) .product__quantity').should(
+        //Verifica que del segundo producto haya 1
+        cy.get(':nth-child(2) .product__quantity').should(
             'contain.text',
             '1 en carrito'
         );
-            //Elimina 1 del primer producto
-            cy.get(':nth-child(1) > .card-body > .flex-grow-1 > .mt-auto > form > .btn').click();
-            //verifica que el tamaño de la coleccion sigue siendo 2 
-            cy.get('.product').should('have.length', 2);
-            //Verifica que el primer producto tiene cantidad 1
-            cy.get('.product:nth-child(1) .product__quantity').should(
-                'contain.text',
-                '1 en carrito'
-            ); 
-            //El elimina 1 del segundo producto
-            cy.get(':nth-child(2) > .card-body > .flex-grow-1 > .mt-auto > form > .btn').click();
-            //verifica que el tamaño de la coleccion sea 1
-            cy.get('.product').should('have.length', 1);
-            
+        //Elimina 1 del primer producto
+        cy.get(':nth-child(2) > .card-body > .flex-grow-1 > .mt-auto > form > .btn > .fa').click();
+        //verifica que el tamaño de la coleccion sigue siendo 2 
+        cy.get('.product').should('have.length', 2);
+        //Verifica que el primer producto tiene cantidad 1
+        cy.get(':nth-child(2) .product__quantity').should(
+            'contain.text',
+            '1 en carrito'
+        );
+        //El elimina 1 del segundo producto
+        cy.get(':nth-child(1) > .card-body > .flex-grow-1 > .mt-auto > form > .btn > .fa').click();
+        //verifica que el tamaño de la coleccion sea 1
+        cy.get('.product').should('have.length', 1);
+
 
     });
 
