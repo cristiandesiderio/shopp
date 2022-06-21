@@ -15,10 +15,11 @@ const detectPort = require('detect-port');
 // Rutas
 const router = require('./router.js');
 const lhroute = require('./.lhroute.js');
+const compression = require('compression');
 
 const inTest = env.test;
 const viewsPath = path.resolve(__dirname, '.', 'views');
-const publicPath = path.resolve(__dirname, '.', 'public');
+const publicPath = path.resolve(__dirname, '.', 'static');
 
 async function startServer(port = process.env.PORT) {
     port = port || (await detectPort(3000));
@@ -32,6 +33,7 @@ async function startServer(port = process.env.PORT) {
 
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
+    app.use(compression());
 
     app.use('/static', express.static(publicPath));
     app.use(express.static(path.join(__dirname, 'images')));

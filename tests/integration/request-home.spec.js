@@ -20,10 +20,12 @@ test('Deberia retornar 200 ok cuando se hace un request a la home', async () => 
     expect(resp.status).toBe(200);
 });
 
-test('Deberia utilizar bootstrap 5.2', async () => {
-    const port = instance.address().port;
-    const resp = await fetch(`http://localhost:${port}/`);
-    const html = await resp.text();
+//Test no es mas requerido debido a que se genera un css customizado
+//a partir de bootstrap
+// test('Deberia utilizar bootstrap 5.2', async () => {
+//     const port = instance.address().port;
+//     const resp = await fetch(`http://localhost:${port}/`);
+//     const html = await resp.text();
 
-    expect(html).toMatch('bootstrap@5.2.0');
-});
+//     expect(html).toMatch('bootstrap@5.2.0');
+// });
