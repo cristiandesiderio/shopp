@@ -6,7 +6,7 @@ module.exports = function (grunt) {
         uncss: {
             dist: {
                 files: {
-                    'src/public/css/main.css': ['src/views/*.html']
+                    'src/static/css/main.css': ['src/views/*.html']
                 }
             }
         },
@@ -14,9 +14,9 @@ module.exports = function (grunt) {
             dist: {
                 files: [{
                     expand: true,
-                    cwd: 'src/public/css/',
+                    cwd: 'src/static/css/',
                     src: ['main.css'],
-                    dest: 'src/public/css/',
+                    dest: 'src/static/css/',
                     ext: '.min.css'
 
                 }]
