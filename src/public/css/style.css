@@ -3,7 +3,7 @@
 }
 
 body {
-    background-color: var(--bs-gray-100);
+    background-color: var(--bs-gray-400);
 }
 
 .navbar-brand {
@@ -18,7 +18,7 @@ body {
 .pagination .current {
     display: inline-block;
     padding: 0.5rem 1rem;
-    background: var(--bs-gray-200);
+    background:var(--bs-gray-400);
 }
 
 .pagination ul {
@@ -27,7 +27,7 @@ body {
 }
 
 .filter{
-    background: rgba(142, 186, 236, 0.75);
+    background: var(--bs-gray-900);
 }
 
 .filter select{
