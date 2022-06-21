@@ -21,13 +21,14 @@ test('Deberia retornar 200 ok cuando se hace un request a la home', async () => 
     expect(resp.status).toBe(200);
 });
 
-test('Deberia utilizar bootstrap 5.2', async () => {
-    const port = instance.address().port;
-    const resp = await fetch(`http://localhost:${port}/`);
-    const html = await resp.text();
-
-    expect(html).toMatch('bootstrap@5.2.0');
-});
+//Test no es mas requerido debido a que se genera un css customizado
+//a partir de bootstrap
+// test('Deberia utilizar bootstrap 5.2', async () => {
+//     const port = instance.address().port;
+//     const resp = await fetch(`http://localhost:${port}/`);
+//     const html = await resp.text();
+//     expect(html).toMatch('bootstrap@5.2.0');
+// });
 
 test('Deberia Aparecer el total en 0 cuando se va al carrito sin agregar', async () => {
     const port = instance.address().port;
@@ -61,5 +62,3 @@ test('Deberia quedar total 0 si se elimina el producto del carrito ', async () =
     const html = await resp.text();
     expect(html).toMatch('Total $ 0');
 });
-
-

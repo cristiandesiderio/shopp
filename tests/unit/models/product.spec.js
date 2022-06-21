@@ -10,7 +10,7 @@ test('Crear producto', async () => {
         price: 50000.0,
         type: ProductType.HOME,
         name: 'Placard',
-        description :'Para guardar objetos',
+        description: 'Para guardar objetos',
     };
 
     // Creamos el producto
@@ -153,7 +153,7 @@ test('Listar productos en orden', async () => {
     };
 
     // Creamos ambos productos
-    const product = await ProductModel.create(firstProductData);
+    await ProductModel.create(firstProductData);
     await ProductModel.create(secondProductData);
 
     let products = await ProductModel.getAll();
