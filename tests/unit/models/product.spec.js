@@ -52,6 +52,19 @@ test('Crear producto sin tipo', async () => {
     expect(product.name).toBe(productData.name);
 });
 
+test('Crear producto vacio', async () => {
+    // Creamos el producto
+    const product = await ProductModel.create();
+
+    expect(product.name).toBe('');
+    expect(product.price).toBe(0.0);
+    expect(product.type).toBe(ProductType.HOME);
+    expect(product.discount).toBe(0.0);
+    expect(product.description).toBe('');
+    
+   
+});
+
 test('Listar productos sin resultados', async () => {
     const products = await ProductModel.getAll();
 
@@ -278,6 +291,31 @@ test('Editar producto inexistente', async () => {
 
     // El nombre debería seguir siendo el mismo
     expect(products.rows[0].name).toBe(productData.name);
+});
+
+test('Editar producto para que quede vacio', async () => {
+    const productData = {
+        price: 50000.0,
+        type: ProductType.ELECTRONICS,
+        name: 'Placard',
+        discount:5.0,
+        description:'Para guardar',
+    };
+
+    // Creamos el producto
+    const product = await ProductModel.create(productData);
+    
+    // Modificamos el producto
+    const productUpdated = await ProductModel.update(product.id, {} );
+
+    // La función debería retornar algo
+    expect(productUpdated).not.toBeNull();
+    expect(productUpdated.id).toBe(product.id)
+    expect(productUpdated.name).toBe('');
+    expect(productUpdated.price).toBe(0.0);
+    expect(productUpdated.type).toBe(ProductType.HOME);
+    expect(productUpdated.discount).toBe(0.0);
+    expect(productUpdated.description).toBe('');
 });
 
 test('Eliminar producto', async () => {
